@@ -1,11 +1,11 @@
 package classfile
-
+/*字段和方法表*/
 type MemberInfo struct {
 	cp              ConstantPool
 	accessFlags     uint16
 	nameIndex       uint16
-	descriptorIndex uint16
-	attributes      []AttributeInfo
+	descriptorIndex uint16 //常量池索引
+	attributes      []AttributeInfo //属性表
 }
 //函数读取字段或方法数据
 func readMembers(reader *ClassReader, cp ConstantPool) []*MemberInfo {
@@ -16,7 +16,7 @@ func readMembers(reader *ClassReader, cp ConstantPool) []*MemberInfo {
 	}
 	return members
 }
-//函数读取字段或方法数据
+//函数读取字段或方法数据 cp保存常量池指针
 func readMember(reader *ClassReader, cp ConstantPool) *MemberInfo {
 	return &MemberInfo{
 		cp:              cp,
@@ -26,7 +26,7 @@ func readMember(reader *ClassReader, cp ConstantPool) *MemberInfo {
 		attributes:      readAttributes(reader, cp), //  见 3.4
 	}
 }
-func (self *MemberInfo) AccessFlags() uint16 { ... } // getter
+func (self *MemberInfo) AccessFlags() uint16 {  } // getter
 func (self *MemberInfo) Name() string        {
 	return self.cp.getUtf8(self.nameIndex)
 	}

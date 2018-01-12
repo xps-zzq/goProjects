@@ -2,9 +2,7 @@ package classfile
 
 import "fmt"
 
-/*
-
- */
+/*对应java class 文件格式*/
 type ClassFile struct {
 	//magic uint32
 	minorVersion uint16
@@ -57,13 +55,14 @@ func (self *ClassFile) ClassName() string {
 	return self.constantPool.getClassName(self.thisClass)
 }
 
+//从常量池查找超类名
 func (self *ClassFile) SuperClassName() string {
 	if self.superClass > 0 {
 		return self.constantPool.getClassName(self.superClass)
 	}
 	return "" //只有java.lang.Object 没有超类
 }
-
+//从常量池查找接口名
 func (self *ClassFile) InterfaceNames() []string {
 	interfaceNames := make([]string, len(self.interfaces))
 	for i, cpIndex := range self.interfaces {

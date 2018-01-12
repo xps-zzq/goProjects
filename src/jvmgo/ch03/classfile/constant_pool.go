@@ -1,5 +1,6 @@
 package classfile
 
+//常量池
 type ConstantPool []ConstantInfo
 
 func readConstantPool(reader *ClassReader) ConstantPool {
@@ -14,6 +15,7 @@ func readConstantPool(reader *ClassReader) ConstantPool {
 	}
 	return cp
 }
+
 func (self ConstantPool) getConstantInfo(index uint16) ConstantInfo {
 	if cpInfo := self[index]; cpInfo != nil {
 		return cpInfo
@@ -33,6 +35,7 @@ func (self ConstantPool) getClassName(index uint16) string {
 	classInfo := self.getConstantInfo(index).(*ConstantClassInfo)
 	return self.getUtf8(classInfo.nameIndex)
 }
+
 func (self ConstantPool) getUtf8(index uint16) string {
 	utf8Info := self.getConstantInfo(index).(*ConstantUtf8Info)
 	return utf8Info.str
@@ -49,6 +52,7 @@ func readConstantInfo(reader *ClassReader, cp ConstantPool) ConstantInfo {
 	c.readInfo(reader)
 	return c
 }
+
 //newConstantInfo（）根据tag值创建具体的常量
 func newConstantInfo(tag uint8, cp ConstantPool) ConstantInfo {
 	switch tag {
