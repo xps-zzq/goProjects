@@ -2,7 +2,24 @@ package classfile
 
 import "fmt"
 
-/*对应java class 文件格式*/
+/*对应java class 文件格式
+    u4            magic;
+    u2            minor_version;
+    u2            major_version;
+    u2            constant_pool_count;
+    cp_info        contant_pool[constant_pool_count – 1];
+    u2            access_flags;
+    u2            this_class;
+    u2            super_class;
+    u2            interfaces_count;
+    u2            interfaces[interfaces_count];
+    u2            fields_count;
+    field_info        fields[fields_count];
+    u2            methods_count;
+    method_info        methods[methods_count];
+    u2            attributes_count;
+    attribute_info    attributes[attributes_count];
+*/
 type ClassFile struct {
 	//magic uint32
 	minorVersion uint16
@@ -62,6 +79,7 @@ func (self *ClassFile) SuperClassName() string {
 	}
 	return "" //只有java.lang.Object 没有超类
 }
+
 //从常量池查找接口名
 func (self *ClassFile) InterfaceNames() []string {
 	interfaceNames := make([]string, len(self.interfaces))
