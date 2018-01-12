@@ -68,6 +68,17 @@ func (self *ClassFile) MajorVersion() uint16 {
 	return self.majorVersion
 }
 
+func (self *ClassFile) MinorVersion() uint16 {
+	return self.minorVersion
+}
+func (self *ClassFile) ConstantPool() ConstantPool {
+	return self.constantPool
+}
+
+func(self *ClassFile) AccessFlags() uint16{
+	return self.accessFlags
+}
+
 func (self *ClassFile) ClassName() string {
 	return self.constantPool.getClassName(self.thisClass)
 }
@@ -96,6 +107,8 @@ func (self *ClassFile) readAndCheckMagic(reader *ClassReader) {
 		panic("java.lang.ClassFormatError: magic!")
 	}
 }
+
+
 func (self *ClassFile) readAndCheckVersion(reader *ClassReader) {
 	self.minorVersion = reader.readUint16()
 	self.majorVersion = reader.readUint16()
@@ -109,3 +122,4 @@ func (self *ClassFile) readAndCheckVersion(reader *ClassReader) {
 	}
 	panic("java.lang.UnsupportedClassVersionError!")
 }
+
