@@ -26,7 +26,9 @@ func readMember(reader *ClassReader, cp ConstantPool) *MemberInfo {
 		attributes:      readAttributes(reader, cp), //  见 3.4
 	}
 }
-func (self *MemberInfo) AccessFlags() uint16 {  } // getter
+func (self *MemberInfo) AccessFlags() uint16 {
+	return self.accessFlags
+} // getter
 func (self *MemberInfo) Name() string        {
 	return self.cp.getUtf8(self.nameIndex)
 	}
